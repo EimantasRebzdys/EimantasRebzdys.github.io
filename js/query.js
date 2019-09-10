@@ -74,7 +74,7 @@ function CheckId(number) {
 
 function test(){
     var id = $("#idplaceholder").val();
-    alert(ChekcId(id));
+    alert(CheckId(id));
 }
 
 function validate(){
