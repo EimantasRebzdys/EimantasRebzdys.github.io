@@ -1,9 +1,34 @@
 function CheckId(number) {
     if((number.length == 7) || (number.length == 9)) {
         var juridioAsmensStandartas = "";
+        var kontrolineSuma = "";
+
         if(number.length == 7) {
-            juridioAsmensStandartas = "Senas juridinio asmens kodo standartas."
+            juridioAsmensStandartas = "Senas juridinio asmens kodo standartas.";
+        } else if(number.length == 9) {
+            juridioAsmensStandartas = "Naujasis juridinio asmens kodo standartas.";
+
+            var s = Number(number[0])*1 + Number(number[1])*2 + Number(number[2])*3;
+            s += Number(number[3])*4 + Number(number[4])*5 + Number(number[5])*6 + Number(number[6])*7;
+            s += Number(number[7])*8;
+            var controlNum = s % 11;
+            if(controlNum == 10) {
+                s = Number(number[0])*3 + Number(number[1])*4 + Number(number[2])*5;
+                s += Number(number[3])*6 + Number(number[4])*7 + Number(number[5])*8;
+                s += Number(number[6])*9 + Number(number[7])*1;
+                controlNum = s % 11;
+                if(controlNum == 10) {
+                    controlNum = 0;
+                }
+            }
+            if(controlNum == Number(number[8])) {
+                kontrolineSuma = "Juridinio asmens kodo kontrolinė suma sutampa."
+            } else {
+                kontrolineSuma = "KLAIDA: Juridinio asmens kodo kontrolinė suma nesutampa.";
+                //kontrolineSuma += "\n(Turėtų būti: " + controlNum + " Yra: " + Number(number[8]) + ")";
+            }
         }
+        return juridioAsmensStandartas + "\n" + kontrolineSuma;
     } else if(number.length == 11) {
         var lytis = "";
         var gimimoMetai = "";
