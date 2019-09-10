@@ -79,6 +79,6 @@ function test(){
 
 function validate(){
     imput = $("#idplaceholder");  
-    output = imput.val().replace(/[a-zA-Z]|[$&+,:;=?@#|'<>.^*()%!-]/g, "");
+    output = imput.val().replace(/[a-zA-Z]|\s|[$&+,:;=?@#|'<>.^*()%!-]/g, "");
     $(imput).val(output);
 }
