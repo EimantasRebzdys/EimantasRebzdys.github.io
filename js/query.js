@@ -1,5 +1,5 @@
 function CheckId(number) {
-    if((number.length == 7) || (number.length == 9)) {
+    if((number.length == 7) || (number.length == 9)) {//Juridinis asmuo
         var juridioAsmensStandartas = "";
         var kontrolineSuma = "";
 
@@ -13,13 +13,7 @@ function CheckId(number) {
             s += Number(number[7])*8;
             var controlNum = s % 11;
             if(controlNum == 10) {
-                s = Number(number[0])*3 + Number(number[1])*4 + Number(number[2])*5;
-                s += Number(number[3])*6 + Number(number[4])*7 + Number(number[5])*8;
-                s += Number(number[6])*9 + Number(number[7])*1;
-                controlNum = s % 11;
-                if(controlNum == 10) {
-                    controlNum = 0;
-                }
+                return "Error";
             }
             if(controlNum == Number(number[8])) {
                 kontrolineSuma = "Juridinio asmens kodo kontrolinė suma sutampa."
@@ -29,7 +23,7 @@ function CheckId(number) {
             }
         }
         return juridioAsmensStandartas + "\n" + kontrolineSuma;
-    } else if(number.length == 11) {
+    } else if(number.length == 11) { //Fizinis asmuo
         var lytis = "";
         var gimimoMetai = "";
         var gimimoMenuo = "";
@@ -97,13 +91,25 @@ function CheckId(number) {
 }
 
 
+function createElement(data){
+    var target = $('#container');
+    $(target).append($('<div>', {class: 'mx-auto p-1 image-area',style:"color:rgba(183,183,183,0.5)"}));
+    $(target).append($('<div>'+data+'</div>'));
+    //$(target).append($('<div>', {class: 'bct mt-2'}));
+    //$(target).append($('<div>', {class: 'bct mt-2'}));
+    //$(target).append($('<div>', {class: 'bct mt-2'}));
+    target = $(target).children().first();
+    $(target).append($('<i>', {class: 'fa fa-male',style:"font-size:10vh"}));  
+}
+
 function test(){
     var id = $("#idplaceholder").val();
-    alert(CheckId(id));
+    var data = CheckId(id);
+    createElement(data);
 }
 
 function validate(){
     imput = $("#idplaceholder");  
-    output = imput.val().replace(/[a-zA-Z]|\s|[$&+,:;=?@#|'<>.^*()%!-]/g, "");
+    output = imput.val().replace(/[a-zA-Z]|\s|[$&+,:;=?@#|_+{}"/\\[\]'<>~`.^*()%!-]/g, "");  
     $(imput).val(output);
 }
