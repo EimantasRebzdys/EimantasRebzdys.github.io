@@ -93,13 +93,13 @@ function CheckId(number) {
 
 function createElement(data){
     var target = $('#container');
-    $(target).append($('<div>', {class: 'mx-auto p-1 image-area',style:"color:rgba(183,183,183,0.5)"}));
+    //$(target).append($('<div>', {class: 'mx-auto p-1 image-area',style:"color:rgba(183,183,183,0.5)"}));
     $(target).append($('<div>'+data+'</div>'));
     //$(target).append($('<div>', {class: 'bct mt-2'}));
     //$(target).append($('<div>', {class: 'bct mt-2'}));
     //$(target).append($('<div>', {class: 'bct mt-2'}));
-    target = $(target).children().first();
-    $(target).append($('<i>', {class: 'fa fa-male',style:"font-size:10vh"}));  
+    //target = $(target).children().first();
+   // $(target).append($('<i>', {class: 'fa fa-male',style:"font-size:10vh"}));  
 }
 
 function test(){
