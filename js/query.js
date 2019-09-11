@@ -92,9 +92,26 @@ function CheckId(number) {
 
 
 function createElement(data){
-    var target = $('#container');
+var target = $('#container');
+    if($(target).children().html()==null){
+        if(true ){ //Check if result valid#
+            $(target).append($('<div>',{class:'mx-auto p-4 output-area'}));
+            $(target).children().append($('<div>', {class: 'mx-auto p-1 image-area',style:"color:rgba(183,183,183,0.5)"}));
+            $(target).children().first().append($('<div>'+data+'</div>'));
+            target = $(target).children().children().first();
+            $(target).append($('<i>', {class: 'fa fa-male',style:"font-size:10vh"})); 
+       
+        } else{
+            $(target).html('');
+            $(targer).append(data);
+        }
+    }else{
+     $(target).html('');
+     //continue;   
+    }
+
     //$(target).append($('<div>', {class: 'mx-auto p-1 image-area',style:"color:rgba(183,183,183,0.5)"}));
-    $(target).append($('<div>'+data+'</div>'));
+   // $(target).append($('<div>'+data+'</div>'));
     //$(target).append($('<div>', {class: 'bct mt-2'}));
     //$(target).append($('<div>', {class: 'bct mt-2'}));
     //$(target).append($('<div>', {class: 'bct mt-2'}));
