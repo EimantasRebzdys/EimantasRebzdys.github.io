@@ -1,3 +1,4 @@
+
 function CheckId(number) {
     if((number.length == 7) || (number.length == 9)) {//Juridinis asmuo
         info = {"type":"J"};
@@ -87,18 +88,28 @@ function validateId(number){
     }
 }
 
-function createElement(data){
+function createElement(data,number){
 var target = $('#container');
     if($(target).children().html()==null){
         if(typeof data ==="object"){ //Check if result valid#
             $(target).append($('<div>',{class:'mx-auto p-4 output-area'}));
             $(target).children().append($('<div>', {class: 'mx-auto p-1 image-area',style:"color:rgba(183,183,183,0.5)"}));
             if(data.type==="J"){
-                $(target).children().first().append($('<div class="p-3">'+data.standart+'</div>'));
-                $(target).children().first().append($('<div class="p-3">'+data.checksum+'</div>'));
-                target = $(target).children().children().first();
-                $(target).append($('<i>', {class: 'fa fa-briefcase',style:"font-size:10vh"}));
-                return ;
+                scrapInfo(number,function (test){
+
+                    $(target).children().first().append($('<div class="p-3">'+data.standart+'</div>'));
+                    $(target).children().first().append($('<div class="p-3">'+data.checksum+'</div>'));
+                    target = $(target).children().children().first();
+                    $(target).append($('<i>', {class: 'fa fa-briefcase',style:"font-size:10vh"}));  
+                    var table = $("#table");
+                    if(table.children().html()!=null){
+                        table.children().html(null);
+                    }
+                    table.append($('<table>',{class: 'table table-dark mt-5'}));
+                    for(i in test){
+                        table.children().append('<tr><th scope="row"></th><td>'+i+'</td><td>'+test[i]+'</td></tr>');
+                    }
+                });return ;
             }else{
                 $(target).children().first().append($('<div class="p-3">'+data.sex+'</div>'));
                 $(target).children().first().append($('<div class="bct">'+data.year+'-'+data.month+"-"+data.day+'</div>'));
@@ -118,18 +129,49 @@ var target = $('#container');
             }  
         } else{
             $(target).children().append($('<div>'+data+'</div>'));
-            //$(targer).append(data);
         }
     }else{
      $(target).html('');   
-     return createElement(data);
+     return createElement(data,number);
     } 
 }
 
 function check(){
     var id = $("#idplaceholder").val();
+    $("#table").html(null);
+    $('#container').html(null);
     var data = CheckId(id);
-    createElement(data);
+    createElement(data,id);
+}
+
+function scrapInfo(number,callback){
+    var xhr = new XMLHttpRequest();
+    data = [];
+    testdata = {};
+    xhr.onreadystatechange = function() {
+
+        
+        if(this.readyState == 4 &&this.status == 404){   
+            callback(testdata);
+        } 
+
+
+
+
+        if (this.readyState == 4 && this.status == 200) {
+            var resp = this.response;
+            var dom =new DOMParser().parseFromString(resp, "text/html");
+            testdata.Pavadinimas=dom.documentElement.getElementsByClassName("page-title")[0].innerText;
+        for(i = 0;i<17;i=i+2){
+            var key = dom.documentElement.getElementsByClassName("info-table-culumn")[i].innerText;
+            var imp = dom.documentElement.getElementsByClassName("info-table-culumn")[i+1].innerText;
+           testdata[key] = imp;
+        }
+            callback(testdata);
+        } 
+      };
+    xhr.open('GET', "https://abalt.lt/imone/"+number+"", true);
+    xhr.send();
 }
 
 function validate(){
