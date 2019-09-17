@@ -109,7 +109,6 @@ var target = $('#container');
                     for(i in test){
                         table.children().append('<tr><th scope="row"></th><td>'+i+'</td><td>'+test[i]+'</td></tr>');
                     }
-                    target.append('<div>',{class:'pb-5'})
                 });return ;
             }else{
                 $(target).children().first().append($('<div class="p-3">'+data.sex+'</div>'));
